@@ -9,7 +9,7 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 // const dispatch = useDispatch(); // You were missing parentheses here
@@ -18,6 +18,8 @@ import { authActions } from "../redux/store";
 const Header = () => {
   const isLogin = useSelector((state) => state.isLogin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   console.log(isLogin);
   // state
   const [value, setValue] = useState();
@@ -35,7 +37,8 @@ const Header = () => {
     // Fixed the function name
     try {
       dispatch(authActions.logout());
-      alert("Logout Successful"); // Corrected the alert message
+      alert("Logout Successful");
+      navigate("/login"); // Corrected the alert message
     } catch (error) {
       console.log(error);
     }

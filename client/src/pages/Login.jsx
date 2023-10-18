@@ -35,6 +35,7 @@ function Login() {
       const data = response.data;
 
       if (data.success) {
+        localStorage.setItem("userId", data?.user._id);
         dispatch(authActions.login());
         alert("User Logged in Successfully");
         navigate("/");
