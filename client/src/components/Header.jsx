@@ -11,13 +11,35 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+// const dispatch = useDispatch(); // You were missing parentheses here
+
+import { authActions } from "../redux/store";
 const Header = () => {
   const isLogin = useSelector((state) => state.isLogin);
+  const dispatch = useDispatch();
   console.log(isLogin);
   // state
   const [value, setValue] = useState();
 
+  // const hendleLogOut = () => {
+  //   try {
+  //     dispatch(authActions.logout());
+  //     alert("Logout SuccessFully");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleLogout = () => {
+    // Fixed the function name
+    try {
+      dispatch(authActions.logout());
+      alert("Logout Successful"); // Corrected the alert message
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <AppBar position="sticky">
@@ -62,7 +84,9 @@ const Header = () => {
               </>
             )}
             {isLogin && (
-              <Button sx={{ margin: 1, color: "white" }}>Logout</Button>
+              <Button onClick={handleLogout} sx={{ margin: 1, color: "white" }}>
+                Logout
+              </Button>
             )}
           </Box>
         </Toolbar>

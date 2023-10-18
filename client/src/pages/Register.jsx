@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Register() {
+  const navigate = useNavigate(); // Corrected variable name
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -16,10 +19,58 @@ function Register() {
     });
   };
 
-  const handleSubmit = (event) => {
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   // You can now access the form data in the 'formData' object and send it to your server for registration.
+  //   console.log(formData);
+
+  //   try {
+  //     const data = await axios.post(
+  //       "http://localhost:3000/api/v1/user/register",
+  //       {
+  //         username: formData.username,
+  //         email: formData.email,
+  //         password: formData.password,
+  //       }
+  //     );
+  //     if (data.success) {
+  //       alert("User Registered Successfully");
+  //       navigate("/login");
+
+  //       // Corrected function name for navigation
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // You can now access the form data in the 'formData' object and send it to your server for registration.
     console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/v1/user/register",
+        {
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        }
+      );
+
+      const data = response.data;
+
+      if (data.success) {
+        alert("User Registered Successfully");
+        navigate("/login"); // Corrected function name for navigation
+      } else {
+        alert("Registration Failed. Please check your information.");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("An error occurred while trying to register.");
+    }
   };
 
   return (

@@ -75,7 +75,7 @@ exports.loginController = async (req, res) => {
     if (!email || !password) {
       return res.status(401).send({
         success: false,
-        message: "Plwase provide email or password",
+        message: "Please provide email or password",
       });
     }
     const user = await userModel.findOne({ email });
